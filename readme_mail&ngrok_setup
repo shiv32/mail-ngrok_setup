@@ -1,0 +1,131 @@
+
+====================================== mail setup ======================================================
+send mail from ubuntu at startup -->
+
+1.  sudo apt-get install ssmtp -y
+
+edit file -->
+sudo vi /etc/ssmtp/ssmtp.conf
+
+add below lines -->
+
+#
+# Config file for sSMTP sendmail
+#
+# The person who gets all mail for userids < 1000
+# Make this empty to disable rewriting.
+root=postmaster
+
+# The place where the mail goes. The actual machine name is required no 
+# MX records are consulted. Commonly mailhosts are named mail.domain.com
+#mailhub=mail
+mailhub=smtp.gmail.com:587
+
+AuthUser=yourmail@gmail.com
+AuthPass=your_password
+UseTLS=YES
+UseSTARTTLS=YES
+
+# Where will the mail seem to come from?
+rewriteDomain=gmail.com
+
+# The full hostname
+hostname=yourhostname
+
+# Are users allowed to set their own From: address?
+# YES - Allow the user to specify their own From: address
+# NO - Use the system generated From: address
+FromLineOverride=YES
+
+
+2.  sudo apt install mailutils -y
+
+test mail -->
+
+ echo "system start" | mail -s "start" destinationmail@xx.com
+
+
+3. create a file /etc/init.d/myemail, then add the following scripts.
+
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          myemail
+# Required-Start: 
+# Required-Stop:
+# Default-Start:     1 2 3 4 5
+# Default-Stop:      0 6
+# Short-Description: on boot and shutdown send a email.
+# Description:
+### END INIT INFO
+
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+
+. /lib/lsb/init-functions
+
+
+case "$1" in
+  start|status)
+        echo "system start" | mail -s "start" destinationmail@xx.com
+        date +"%Y-%m-%d %H:%M:%S   --start" >> /var/log/myemail.log
+        ;;
+  restart|reload|force-reload)
+        echo "Error: argument '$1' not supported" >&2
+        exit 3
+        ;;
+  stop)
+        echo "system poweroff" | mail -s "poweroff" destinationmail@xx.com
+        date +"%Y-%m-%d %H:%M:%S   --stop" >> /var/log/myemail.log
+        ;;
+  *)
+        echo "Usage: $0 start|stop" >&2
+        exit 3
+        ;;
+esac
+
+return 0
+
+4. sudo update-rc.d myemail defaults
+
+5. make script mailstart.sh and add lines   
+   #!/bin/bash
+
+   sleep 40
+   sudo /etc/init.d/myemail start
+
+
+5. add in crontab -e
+   @reboot /home/username/mailstart.sh >/dev/null 2>&1
+   @reboot /home/username/tunnel.sh >/dev/null 2>&1
+   @reboot /home/username/ngrokMail.sh >/dev/null 2>&1
+   @reboot /home/username/ngrokFullogMail.sh >/dev/null 2>&1
+
+
+6. done....reboot your pc with good internate connection :)
+
+============================ngrok setup ==============================================================
+====================== Access your PC from anywhere =================
+
+1. first signup in ngrok and download zip file
+
+2. extract zip file u will get ngrok binary file
+
+3. move ngrok bin file in /usr/bin/
+
+4. give chmod 777 permission to bin file 
+
+5. token command will get from your ngrok portal run this in terminal ==>
+   ngrok authtoken 1XUaFChNdYcWDa7huzMxFjZcftu_6o1rUxVswzaekzxXMLiYW
+
+6. then run this=>
+   ngrok tcp 22
+
+7. from remote pc ==>
+  ssh 0.tcp.ngrok.io -p 14353
+
+================================================================
+
+
+       
+
