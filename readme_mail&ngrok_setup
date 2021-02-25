@@ -126,6 +126,19 @@ return 0
 
 ================================================================
 
+======================= give user "root/sudo" access ===========================
+To give the user "foo" unlimited passwordless access to root privileges via the sudo command, edit /etc/sudoers and add the line:
+
+foo   ALL = NOPASSWD: ALL
+----------------------------------------------------------------
+Enable sudo without password in Ubuntu/Debian
+
+username     ALL=(ALL) NOPASSWD:ALL
+-----------------------------------------------------------------
+sudo adduser username sudo
+sudo adduser username root
+===================================================================================
+
 
        
 
