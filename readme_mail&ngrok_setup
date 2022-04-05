@@ -129,6 +129,8 @@ return 0
 
 6. then run this=>
    ngrok tcp 22
+   
+   You will get URL eg: tcp://0.tcp.ngrok.io:14353
 
 7. from remote pc ==>
   ssh 0.tcp.ngrok.io -p 14353
