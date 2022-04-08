@@ -150,6 +150,14 @@ sudo adduser username sudo
 sudo adduser username root
 ===================================================================================
 
+====================================================================================
+ngrok file  transfer/data backup -->
 
-       
+file send from outside world to ngrok pc -->
+time sudo rsync -avh --no-o --no-g --no-perms --delete -e 'ssh -p ngrok_port' --progress --stats /source_dir/ shiv@0.tcp.ngrok.io:/destination_dir/
+
+file send from ngrok pc to outside world -->
+time sudo rsync -avh -e 'ssh -p ngrok_port' --progress --stats shiv@0.tcp.ngrok.io:/source_dir/testSong.mkv /destination_dir/
+====================================================================================
+
 
