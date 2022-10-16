@@ -43,6 +43,9 @@ Note: Authorize access to your Google account (yourmail@gmail.com)
 1. Sign in to your Google Account.
 2. Go to Security > Less secure app access. Click Turn on access.
 
+Note-> Google Disabling Allow Less Secure Apps Option - Alternative Solution
+           https://youtu.be/uVDq4VOBMNM
+
 Ref: https://kb.synology.com/en-global/SRM/tutorial/How_to_use_Gmail_SMTP_server_to_send_emails_for_SRM
 ===============================================
 
